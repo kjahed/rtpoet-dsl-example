@@ -2,7 +2,7 @@ model ParcelRouter {
 
 	protocol TransmissionProt {
 		in message free()
-		out message transmit(p: ParcelRouter_v4.Parcel[1])
+		out message transmit(p: ParcelRouter.Parcel[1])
 	}
 
 
@@ -82,23 +82,23 @@ model ParcelRouter {
 			g3++;
 		`
 
-		internal auto port initS0P: ParcelRouter_v4.StageInitProt[1]
+		internal auto port initS0P: ParcelRouter.StageInitProt[1]
 		internal auto port loggerP: RTSLibrary.Log[1]
-		internal auto port initS2P: ParcelRouter_v4.StageInitProt[1]
-		internal auto port initS1P: ParcelRouter_v4.StageInitProt[1]
-		internal auto port bin3P: ~ParcelRouter_v4.BinProt[1]
-		internal auto port bin2P: ~ParcelRouter_v4.BinProt[1]
-		internal auto port bin1P: ~ParcelRouter_v4.BinProt[1]
-		internal auto port bin0P: ~ParcelRouter_v4.BinProt[1]
-		internal auto port genP: ~ParcelRouter_v4.GenProt[1]
-		fixed part gen: ParcelRouter_v4.Gen[1]
-		fixed part s0: ParcelRouter_v4.Stage[1]
-		fixed part s2: ParcelRouter_v4.Stage[1]
-		fixed part s1: ParcelRouter_v4.Stage[1]
-		fixed part b1: ParcelRouter_v4.Bin[1]
-		fixed part b2: ParcelRouter_v4.Bin[1]
-		fixed part b3: ParcelRouter_v4.Bin[1]
-		fixed part b0: ParcelRouter_v4.Bin[1]
+		internal auto port initS2P: ParcelRouter.StageInitProt[1]
+		internal auto port initS1P: ParcelRouter.StageInitProt[1]
+		internal auto port bin3P: ~ParcelRouter.BinProt[1]
+		internal auto port bin2P: ~ParcelRouter.BinProt[1]
+		internal auto port bin1P: ~ParcelRouter.BinProt[1]
+		internal auto port bin0P: ~ParcelRouter.BinProt[1]
+		internal auto port genP: ~ParcelRouter.GenProt[1]
+		fixed part gen: ParcelRouter.Gen[1]
+		fixed part s0: ParcelRouter.Stage[1]
+		fixed part s2: ParcelRouter.Stage[1]
+		fixed part s1: ParcelRouter.Stage[1]
+		fixed part b1: ParcelRouter.Bin[1]
+		fixed part b2: ParcelRouter.Bin[1]
+		fixed part b3: ParcelRouter.Bin[1]
+		fixed part b0: ParcelRouter.Bin[1]
 		connect gen.enterP to s0.enterP
 		connect s2.rightP to b3.enterP
 		connect s2.leftP to b2.enterP
@@ -319,14 +319,14 @@ model ParcelRouter {
 
 
 	capsule Gen {
-		public attribute parcel: ParcelRouter_v4.Parcel[1]
+		public attribute parcel: ParcelRouter.Parcel[1]
 		public attribute delay: int[1]= 1
 		public attribute maxParcels: int[1]= 0
 		public attribute i: int[1]= 0
-		external auto port enterP: ParcelRouter_v4.TransmissionProt[1]
+		external auto port enterP: ParcelRouter.TransmissionProt[1]
 		internal auto port timerP: RTSLibrary.Timing[1]
 		internal auto port loggerP: RTSLibrary.Log[1]
-		external auto port genP: ParcelRouter_v4.GenProt[1]
+		external auto port genP: ParcelRouter.GenProt[1]
 
 		statemachine {
 			initial sdtSxbKO
@@ -490,20 +490,20 @@ model ParcelRouter {
 
 
 	capsule Stage {
-		public attribute parcel: ParcelRouter_v4.Parcel[1]
-		relay auto port enterP: ~ParcelRouter_v4.TransmissionProt[1]
-		relay auto port rightP: ParcelRouter_v4.TransmissionProt[1]
-		relay auto port leftP: ParcelRouter_v4.TransmissionProt[1]
+		public attribute parcel: ParcelRouter.Parcel[1]
+		relay auto port enterP: ~ParcelRouter.TransmissionProt[1]
+		relay auto port rightP: ParcelRouter.TransmissionProt[1]
+		relay auto port leftP: ParcelRouter.TransmissionProt[1]
 		internal auto port loggerP: RTSLibrary.Log[1]
-		external auto port initP: ~ParcelRouter_v4.StageInitProt[1]
-		internal auto port sensorP: ParcelRouter_v4.SensorProt[1]
-		internal auto port chute1P: ParcelRouter_v4.ChuteProt[1]
-		internal auto port chute2P: ParcelRouter_v4.ChuteProt[1]
-		internal auto port switcherP: ParcelRouter_v4.ChuteProt[1]
-		fixed part chute1: ParcelRouter_v4.Chute[1]
-		fixed part chute2: ParcelRouter_v4.Chute[1]
-		fixed part sensor: ParcelRouter_v4.Sensor[1]
-		fixed part switcher: ParcelRouter_v4.Switcher[1]
+		external auto port initP: ~ParcelRouter.StageInitProt[1]
+		internal auto port sensorP: ParcelRouter.SensorProt[1]
+		internal auto port chute1P: ParcelRouter.ChuteProt[1]
+		internal auto port chute2P: ParcelRouter.ChuteProt[1]
+		internal auto port switcherP: ParcelRouter.ChuteProt[1]
+		fixed part chute1: ParcelRouter.Chute[1]
+		fixed part chute2: ParcelRouter.Chute[1]
+		fixed part sensor: ParcelRouter.Sensor[1]
+		fixed part switcher: ParcelRouter.Switcher[1]
 		connect chute1.detectP to sensor.detectP
 		connect sensor.switcherP to switcher.switcherP
 		connect enterP to chute1.enterP
@@ -561,9 +561,9 @@ model ParcelRouter {
 
 
 	capsule Bin {
-		external auto port enterP: ~ParcelRouter_v4.TransmissionProt[1]
+		external auto port enterP: ~ParcelRouter.TransmissionProt[1]
 		internal auto port loggerP: RTSLibrary.Log[1]
-		external auto port binP: ParcelRouter_v4.BinProt[1]
+		external auto port binP: ParcelRouter.BinProt[1]
 
 		statemachine {
 			initial QtfZwuZO
@@ -611,15 +611,15 @@ model ParcelRouter {
 
 
 	capsule Chute {
-		public attribute parcel: ParcelRouter_v4.Parcel[1]
+		public attribute parcel: ParcelRouter.Parcel[1]
 		public attribute delay: int[1]= 0
 		public attribute position: int[1]
-		external auto port enterP: ~ParcelRouter_v4.TransmissionProt[1]
-		external auto port exitP: ParcelRouter_v4.TransmissionProt[1]
-		external auto port detectP: ParcelRouter_v4.DetectionProt[1]
+		external auto port enterP: ~ParcelRouter.TransmissionProt[1]
+		external auto port exitP: ParcelRouter.TransmissionProt[1]
+		external auto port detectP: ParcelRouter.DetectionProt[1]
 		internal auto port loggerP: RTSLibrary.Log[1]
 		internal auto port timerP: RTSLibrary.Timing[1]
-		external auto port initP: ~ParcelRouter_v4.ChuteProt[1]
+		external auto port initP: ~ParcelRouter.ChuteProt[1]
 
 		statemachine {
 			initial dxozyCes
@@ -830,10 +830,10 @@ model ParcelRouter {
 			//    }
 		`
 
-		external auto port detectP: ~ParcelRouter_v4.DetectionProt[1]
-		external auto port switcherP: ParcelRouter_v4.SwitchProt[1]
+		external auto port detectP: ~ParcelRouter.DetectionProt[1]
+		external auto port switcherP: ParcelRouter.SwitchProt[1]
 		internal auto port loggerP: RTSLibrary.Log[1]
-		external auto port initP: ~ParcelRouter_v4.SensorProt[1]
+		external auto port initP: ~ParcelRouter.SensorProt[1]
 
 		statemachine {
 			initial JRjtOwUn
@@ -915,16 +915,16 @@ model ParcelRouter {
 
 	capsule Switcher {
 		public attribute direction: int[1]
-		public attribute parcel: ParcelRouter_v4.Parcel[1]
+		public attribute parcel: ParcelRouter.Parcel[1]
 		public attribute delay: int[1]= 1
 		public attribute position: int[1]
-		external auto port switcherP: ~ParcelRouter_v4.SwitchProt[1]
-		external auto port rightP: ParcelRouter_v4.TransmissionProt[1]
-		external auto port leftP: ParcelRouter_v4.TransmissionProt[1]
-		external auto port enterP: ~ParcelRouter_v4.TransmissionProt[1]
+		external auto port switcherP: ~ParcelRouter.SwitchProt[1]
+		external auto port rightP: ParcelRouter.TransmissionProt[1]
+		external auto port leftP: ParcelRouter.TransmissionProt[1]
+		external auto port enterP: ~ParcelRouter.TransmissionProt[1]
 		internal auto port loggerP: RTSLibrary.Log[1]
 		internal auto port timerP: RTSLibrary.Timing[1]
-		external auto port initP: ~ParcelRouter_v4.ChuteProt[1]
+		external auto port initP: ~ParcelRouter.ChuteProt[1]
 
 		statemachine {
 			initial VhBXBDIG
